@@ -1,3 +1,6 @@
+OlhaYastrebova
+N5SugRgyKZ9SLr3T
+
 ## GoIT Node.js Course Template Homework
 
 Виконайте форк цього репозиторію для виконання домашніх завдань (2-6)
