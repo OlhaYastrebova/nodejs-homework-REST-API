@@ -1,0 +1,2 @@
+DB_HOST=mongodb+srv://OlhaYastrebova:N5SugRgyKZ9SLr3T@cluster0.jio5oz9.mongodb.net/db_contacts?retryWrites=true&w=majority
+PORT=3000
