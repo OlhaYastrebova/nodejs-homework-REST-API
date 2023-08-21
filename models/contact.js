@@ -41,9 +41,9 @@ const addSchema = Joi.object({
 //   favorite: Joi.boolean().required(),
 // });
 
-const schemas = {
-  addSchema,
-  // updFavoriteSchema,
-};
+// const schemas = {
+//   addSchema,
+//   // updFavoriteSchema,
+// };
 
-module.exports = { Contact, schemas };
+module.exports = { Contact, addSchema };
