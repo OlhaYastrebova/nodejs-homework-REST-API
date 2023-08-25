@@ -19,7 +19,7 @@ const {
     validateBody(schemas.registerSchema),
     ctrl.register
   );
-
+  router.post('/login', checkBody, validateBody(schemas.loginSchema), ctrl.login);
 
 
 
