@@ -49,10 +49,29 @@ res.status(200).json({
 });
 };
 
+const current = async (req, res) => {
+  const { email, subscription } = req.user;
+  res.status(200).json({
+    email,
+    subscription,
+  });
+};
 
-
+const logout = async (req, res) => {
+  const { _id } = req.user;
+  const result = await User.findByIdAndUpdate(_id, { token: '' });
+  if (!result) {
+    throw HttpError(404, 'Not found');
+  }
+  res.status(204).json({});
+};
 
 module.exports = {
   register: ctrlWrapper(register),
   login: ctrlWrapper(login),
+  current: ctrlWrapper(current),
+  logout: ctrlWrapper(logout),
 }
+
+
+// if(!user || !user.token || user.token !== token) {
