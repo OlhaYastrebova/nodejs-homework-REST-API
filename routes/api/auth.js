@@ -6,8 +6,7 @@ const {
     validateBody,
     checkBody,
     authenticate,
-    // upload,
-  } = require('../../middlewares');
+     } = require('../../middlewares');
   
   const router = express.Router();
   
@@ -24,5 +23,12 @@ const {
   router.get('/current', authenticate, ctrl.current);
 
   router.post('/logout', authenticate, ctrl.logout);
+
+  router.patch(
+    "/",
+    authenticate,
+    validateBody(schemas.updSubscriptionSchema),
+    ctrl.updateSubscription
+  );
 
   module.exports = router;

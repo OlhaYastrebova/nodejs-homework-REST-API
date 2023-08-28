@@ -18,7 +18,6 @@ const register = async (req, res) => {
 
     const newUser = await User.create({...req.body, password: hashPassword});
 
-
 res.status(201).json({
     email: newUser.email,
     name: newUser.name,
@@ -40,12 +39,11 @@ const payload = { id: user._id };
 const token = jwt.sign(payload, SECRET_KEY, { expiresIn: '23h' });
 await User.findByIdAndUpdate(user._id, { token });
 res.status(200).json({
-    token,
-//   token: token,
-//   user: {
-//     email: user.email,
-//     subscription: user.subscription,
-//   },
+  token: token,
+  user: {
+    email: user.email,
+    subscription: user.subscription,
+  },
 });
 };
 
@@ -59,11 +57,22 @@ const current = async (req, res) => {
 
 const logout = async (req, res) => {
   const { _id } = req.user;
-  const result = await User.findByIdAndUpdate(_id, { token: '' });
-  if (!result) {
-    throw HttpError(404, 'Not found');
-  }
+  await User.findByIdAndUpdate(_id, { token: '' });
   res.status(204).json({});
+};
+
+const updateSubscription = async (req, res) => {
+  const { _id } = req.user;
+
+  if (!req.body) throw HttpError(400, "missing field subscription");
+
+  const { email, subscription } = await User.findByIdAndUpdate(_id, req.body, {
+    new: true,
+    runValidators: true,
+  });
+  if (!email || !subscription) throw HttpError(404, "Not found");
+
+  res.status(201).json({ email, subscription });
 };
 
 module.exports = {
@@ -71,7 +80,7 @@ module.exports = {
   login: ctrlWrapper(login),
   current: ctrlWrapper(current),
   logout: ctrlWrapper(logout),
+  updateSubscription: ctrlWrapper(updateSubscription),
 }
 
 
-// if(!user || !user.token || user.token !== token) {
